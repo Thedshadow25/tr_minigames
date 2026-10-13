@@ -11,8 +11,7 @@ The server decides every step of both, so a modified client can't skip the puzzl
 
 ## Requirements
 
-- [tr_core](https://github.com/Thedshadow25/tr_core) 1.3.0 or newer. It is the only resource needed:
-  the HUD, the prompts and the sounds are on tr_minigames' own page.
+- [tr_core](https://github.com/Thedshadow25/tr_core) 1.3.0 or newer. 
 - OneSync.
 - ESX, QBCore or Qbox, with ox_inventory or qb-inventory. ox_target or qb-target is optional (it adds
   "Pick the lock" on door handles). tr_core finds what the server runs by itself.
@@ -142,11 +141,6 @@ click, so a modified client can't pick it faster than a person could. A car keep
   handle: back, up, out from the skin), so you can fit it to a car. Copy the printed line into
   `vehicleFits`. While picking in dev mode, the arrow keys (along the door) and Q / E
   (out/in) nudge it 5 mm a press and print the same line. `/lockpick_cam <x> <y> <z> <targetX> <targetY> <targetZ>` tunes the camera.
-
-## Development
-
-The page in `web/dist` is built: nothing to compile to run the resource. Its source, the Blender scripts
-the props are generated from and the tests are in the TR Scripts development repository, not in this one.
 
 ## License
 
