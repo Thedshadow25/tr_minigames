@@ -1,0 +1,27 @@
+Sound effects from freesound.org, all released under CC0 1.0 (public domain).
+Trimmed and normalized by dev/sounds/build.mjs.
+
+https://freesound.org/s/496286/  Screwdriver 1 by 16GPanskaToman_Kristian
+https://freesound.org/s/515359/  Dropping Screws #6.mp3 by flor657
+https://freesound.org/s/398405/  Scrape by Caitlin_100
+https://freesound.org/s/822566/  Plastic Metal Bang Bass by qubodup
+https://freesound.org/s/210313/  20131209_plug out_OlympusLS10_xy.wav by Soundscape_Leuphana
+https://freesound.org/s/661629/  "Jokari Super 4 plus" wire stripper by IRF1010N
+https://freesound.org/s/383449/  Cutting Clipping Wire Copper by deleted_user_7146007
+https://freesound.org/s/818297/  Key Ignition by microman502
+https://freesound.org/s/205879/  Amp short circuit 1.wav by unreadpages
+https://freesound.org/s/382313/  Sizzle / Acid Burn by bottles
+https://freesound.org/s/216531/  Car Not Starting by Moondogg
+https://freesound.org/s/465609/  Vehicle_Car_Peugeot_106_Key_Insertion_Mono.wav by Nox_Sound
+https://freesound.org/s/187346/  Key Removed from Lock.wav by baidonovan
+https://freesound.org/s/403587/  Metal_Mechanism_Click_Small.wav by LamaMakesMusic
+https://freesound.org/s/635649/  reel to reel tape machine flap open close metal plastic click.flac by kyles
+https://freesound.org/s/555322/  Lock Clicking by QuartzMMN
+https://freesound.org/s/595660/  13-Lock being picked -211007_2014.wav by SavReese
+https://freesound.org/s/743260/  Small Metal or Stone Item by qubodup
+https://freesound.org/s/453331/  metal bender creaks clacks bending creaks squeaks bright.flac by kyles
+https://freesound.org/s/537084/  Guitar string snap or breaks - various sounds by khenshom
+https://freesound.org/s/50888/  Car Door Porter Unlocking.wav by RutgerMuller
+https://freesound.org/s/32416/  car_engine_won't start.wav by KRAFTWERK2K1
+https://freesound.org/s/396470/  Electric Sparks.wav by kev_durr
+https://freesound.org/s/639086/  Tiny metal/lockpicking by cappellacciocrew
