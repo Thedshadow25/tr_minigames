@@ -107,8 +107,11 @@ if cfg.prompt then
     end)
 end
 
--- "Pick the lock" on the door handle, for servers with ox_target or qb-target.
-if cfg.target and pcall(TR.system, 'target') then
+-- "Pick the lock" on the door handle, for servers with ox_target or qb-target. Not on tr_core's own
+-- interaction (the default target), which would offer it at every car: there it's the command, the key,
+-- the item's use or the prompt above.
+local hasTarget, targetSystem = pcall(TR.system, 'target')
+if cfg.target and hasTarget and targetSystem ~= 'tr_core' then
     local bones = {}
     for _, door in ipairs(cfg.doors) do bones[#bones + 1] = 'handle_' .. door end
 

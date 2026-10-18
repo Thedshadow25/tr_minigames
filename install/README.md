@@ -17,9 +17,10 @@ ensure tr_minigames
 |---|---|---|
 | `wire_strippers` | Hotwire: needed to hotwire a car (can break on a failed attempt) | `images/wire_strippers.png` |
 | `lishi_pick` | Lockpick: needed to pick a door lock (lost when it snaps) | `images/lishi_pick.png` |
+| `siphon_hose` | Siphon: needed to siphon fuel (not used up). The fuel goes into GTA's jerry can (`WEAPON_PETROLCAN`), which ox_inventory and qb-core already have; the player needs one in their inventory with room in it | `images/siphon_hose.png` |
 
 Change or remove the required item with `item` in `minigames/hotwire/config.lua` and
-`minigames/lockpick/config.lua` (`false` = no item needed).
+`minigames/lockpick/config.lua` and `minigames/siphon/config.lua` (`false` = no item needed).
 
 ### ox_inventory (ESX, Qbox, or QBCore with ox_inventory)
 
@@ -28,7 +29,8 @@ Change or remove the required item with `item` in `minigames/hotwire/config.lua`
 2. Copy `images/*.png` to `ox_inventory/web/images/`.
 3. Restart the server (ox_inventory reads items at start).
 
-Using the Lishi pick from the inventory starts lockpicking (the `client.export` line).
+Using the Lishi pick or the siphon hose from the inventory starts lockpicking or siphoning (the
+`client.export` lines).
 
 ### qb-inventory (QBCore)
 
@@ -38,7 +40,7 @@ Using the Lishi pick from the inventory starts lockpicking (the `client.export` 
 3. Restart the server.
 
 With qb-inventory the items aren't "usable" from the inventory: players start the minigames with
-**G** (or `/hotwire`, `/lockpick`), or the "Pick the lock" target option.
+**G** (or `/hotwire`, `/lockpick`), `/siphon`, or the "Pick the lock" and "Siphon fuel" target options.
 
 ## 3. Optional
 

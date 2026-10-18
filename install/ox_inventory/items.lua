@@ -18,3 +18,13 @@
 			export = 'tr_minigames.lockpick', -- "Use" in the inventory starts lockpicking
 		},
 	},
+
+	['siphon_hose'] = {
+		label = 'Siphon Hose',
+		weight = 400,
+		stack = false,
+		description = 'Two clear hoses and a fuel funnel. Tastes like unleaded.',
+		client = {
+			export = 'tr_minigames.siphon', -- "Use" in the inventory starts siphoning at the car you stand at
+		},
+	},

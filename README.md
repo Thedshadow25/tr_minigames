@@ -6,15 +6,19 @@ skill-check circles. Players nearby see the props and particles and hear the sou
 - **Hotwiring**: unscrew the steering column's cover, find the wires with a test light, strip them,
   twist battery and ignition together and crank the starter.
 - **Lockpicking**: pick a car door's wafer lock with a Lishi-style pick, one wafer at a time, by feel.
+- **Siphoning**: set a jerry can down, open the car's filler, put the hoses in, blow the fuel up the
+  hose puff by puff and let it run into the can.
 
-The server decides every step of both, so a modified client can't skip the puzzle.
+The server decides every step of all three, so a modified client can't skip the puzzle.
 
 ## Requirements
 
 - [tr_core](https://github.com/Thedshadow25/tr_core) 1.3.0 or newer. 
 - OneSync.
 - ESX, QBCore or Qbox, with ox_inventory or qb-inventory. ox_target or qb-target is optional (it adds
-  "Pick the lock" on door handles). tr_core finds what the server runs by itself.
+  "Pick the lock" on door handles and "Siphon fuel" on cars). tr_core finds what the server runs by itself.
+- For siphoning, a fuel script tr_core supports (ox_fuel, lc_fuel, cdn-fuel, ps-fuel, LegacyFuel), or
+  none: then each car's fuel is kept in its `fuel` state bag (full until someone siphons it).
 
 ## Installing
 
@@ -25,7 +29,7 @@ The server decides every step of both, so a modified client can't skip the puzzl
    ensure tr_minigames
    ```
 
-2. Add the two items (`wire_strippers`, `lishi_pick`) and their icons: [install/README.md](install/README.md)
+2. Add the three items (`wire_strippers`, `lishi_pick`, `siphon_hose`) and their icons: [install/README.md](install/README.md)
    has the entries for ox_inventory and qb-inventory.
 3. Settings are in `config.lua` (sound volume, how far the props and sounds carry) and in each
    minigame's `minigames/<name>/config.lua`, where it can also be turned off (`enabled = false`).
@@ -141,6 +145,73 @@ click, so a modified client can't pick it faster than a person could. A car keep
   handle: back, up, out from the skin), so you can fit it to a car. Copy the printed line into
   `vehicleFits`. While picking in dev mode, the arrow keys (along the door) and Q / E
   (out/in) nudge it 5 mm a press and print the same line. `/lockpick_cam <x> <y> <z> <targetX> <targetY> <targetZ>` tunes the camera.
+
+## Siphoning
+
+Stand by a car's fuel filler with a `siphon_hose` and a jerry can that has room in it, then use
+`/siphon`, the item, or "Siphon fuel" on the car with ox_target / qb-target. The car has to be
+unlocked (the fuel door opens from inside), with nobody in the driver's seat and the engine off.
+Everything is done by hand, the way it's done for real:
+
+1. **Set up the can**: point at the ground by the car and put the can down (scroll turns it), unscrew
+   its cap (hold LMB on it and circle counter-clockwise; it goes on the can's shoulder, on its strap)
+   and drag the funnel over the can's neck to drop it in.
+2. **Open the filler**: unscrew the fuel cap the same way. It drops onto its strap and swings.
+3. **Hoses**: click the siphon hose's end and it goes down the filler neck until it reaches the fuel.
+   Click its other end and it goes down into the can through the funnel. Click the thin blow hose and
+   it goes into the filler too.
+4. **Prime**: hold **LMB** to blow into the blow hose and let go while the pressure is in the green
+   zone. Each good puff pushes the fuel further up the hose (you see it climb in the clear tube).
+   Blow too hard and you get a mouthful of fuel: three of those (`maxStrikes`) and you give up,
+   coughing.
+5. **Flow**: the fuel crests and runs into the can by itself (`flowRate`, a quarter litre a second).
+   Press **E** to pull the hose when you have enough. If the can fills up the fuel backs up into the
+   funnel and then runs over it onto the ground. The tank's last few percent (`reserve`) stays in the
+   car: air comes through.
+6. **Pack up**: the hoses come out, you screw the fuel cap back on (clockwise until it clicks), click
+   the hose to pull it out of the can, pull the funnel out (**S** or drag up), cap the can and pick it
+   up. **Esc** skips the pack-up.
+
+The server decides everything that matters: whether you may start, how many puffs it takes, how fast
+the fuel runs and how much there is, and how much of it made it into the can. A modified client can't
+fill a can faster than the hose can. The fuel comes out of the car through tr_core's fuel bridge
+(`TR.fuel`) and goes into the fullest jerry can that still has room (`Config.siphon.can`). Fuel that
+missed the can leaves a petrol puddle (it burns) that everyone nearby sees.
+
+- Needs the `siphon_hose` item (not used up) and GTA's jerry can (`WEAPON_PETROLCAN`). Item entries
+  for ox_inventory and qb-inventory plus the icon are in `install/` (see its README).
+- Settings are in `minigames/siphon/config.lua` (`Config.siphon`): tank sizes by vehicle class,
+  puffs, flow rate, time limit, cooldowns per player and per car, puddles.
+- Moving away, driving the car off or starting its engine ends it and spills what was in the hose.
+- `devMode` (off by default) lets admins siphon any car, even a locked one or one with its engine
+  running, and turns on the fitting tools below and `/siphon_cam`. Turn it off on live servers.
+- For logs, XP or police scripts:
+  `AddEventHandler('tr_minigames:siphon:siphoned', function(src, netId, plate, litres, spilled) end)`
+  on the server fires when a player finishes (litres in the can, litres on the ground).
+- Players near it see everything: the hoses, the fuel in them, the can, the funnel and the caps, and
+  the player at the same point of their animation, and they hear it. The siphoning client sends
+  compact game state about 10 times a second; the server checks it (only short lists of whole
+  numbers) and passes it on as for the other minigames.
+- **Where the filler is**: on the car's petroltank bone, or a guess on the flank above a rear wheel.
+  `/filler_autofit` (dev mode, saving needs an admin) fits every car model that has no fit yet by
+  itself, reading the drawn bodywork the way `/lockpick_autofit` reads a door. On a car without a
+  bone it first maps the whole rear quarter (the doors and glass come off for it and go back after)
+  and picks where a filler usually is on that body: over the back of the rear wheel arch, about
+  15 cm over it (also on a lifted truck, its arch far over the tyre), under the panel's top, clear
+  of the arch and its lip or flare, the doors, the windows and the tail light. A lorry's bone ahead
+  of the rear wheel is on its side tank: it maps the tank along and goes in its middle. There (or
+  round another bone) it puts the filler on plain, smooth paint, clear of body lines and
+  panel gaps, with 2 cm of plain paint round it, seated flat on the paint. Only one flank is
+  measured; a car without a bone gets the fit mirrored to the side the player stands. A car takes
+  a few seconds. `/filler_forceauto` refits every car, replacing fits made by hand too (a car it
+  can't fit keeps its old fit). `/filler_autofit redo` refits automatic fits (never ones made by hand),
+  `<model>` one car, `show` shows what it measured, `compare` fits the cars fitted by hand again
+  and prints how far off it is from each (saves nothing). C during a run stops on the next fitted
+  car, zoomed out, until C again. `/filler_fitall` brings up the cars without a fit one after another to fit
+  by hand (`review`: the auto fits marked `check`, `all`: every car); the keys are listed in
+  `client/fitter.lua`. Fits are saved to `minigames/siphon/fits.json` and reach every player at once.
+  Cars with the same body share a fit.
+- `/siphon_cam <x> <y> <z> <targetX> <targetY> <targetZ> [fov]` (dev mode) tunes the blowing camera.
 
 ## License
 

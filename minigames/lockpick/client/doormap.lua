@@ -82,6 +82,7 @@ local function leastSquares(samples, terms, keep)
     if not n or count < n + 2 then return end
     return solve(ata, atb)
 end
+DoorMap.leastSquares = leastSquares -- also used by the siphon's FillerMap
 
 local function evaluate(coef, terms, u, v)
     local t, h = terms(u, v), 0.0
